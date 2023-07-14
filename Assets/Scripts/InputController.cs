@@ -5,13 +5,13 @@ public class InputController : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     private InputAction moveAction;
-    private AnimationController animationController;
     private PlayerController playerController;
+    private AnimationController animationController;
 
     private void Start()
     {
-        //animationController = GetComponent<AnimationController>();
         playerController = GetComponent<PlayerController>();
+        animationController = GetComponent<AnimationController>();
 
         EnableInputs();
     }
@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour
         moveAction = playerInputActions.Movement.Move;
     
         moveAction.performed += OnMove;
-        moveAction.canceled += OnMove;
+        moveAction.canceled += OnMoveEnd;
 
         moveAction.Enable();
     }
@@ -36,14 +36,24 @@ public class InputController : MonoBehaviour
     private void DisableInputs()
     {
         moveAction.performed -= OnMove;
-        moveAction.canceled -= OnMove;
+        moveAction.canceled -= OnMoveEnd;
 
         moveAction.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        //animationController.CrossfadeAnimation(AnimationState.AxeKick);
-        playerController.Move(context.ReadValue<Vector2>());
+        Vector2 direction = context.ReadValue<Vector2>();
+    
+        playerController.Move(direction);
+        animationController.PlayAnimation(AnimationState.WalkForward);
+    }
+
+    private void OnMoveEnd(InputAction.CallbackContext context)
+    {
+        Vector2 direction = context.ReadValue<Vector2>();
+
+        playerController.Move(direction);
+        animationController.StopAnimation(AnimationState.WalkForward);
     }
 }

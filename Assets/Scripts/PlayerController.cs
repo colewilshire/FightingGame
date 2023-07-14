@@ -3,15 +3,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float moveSpeed = 5f;
-    private float jumpHeight = 2f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpHeight = 2f;
     private bool isJumping = false;
     private Rigidbody _rb;
     private Vector2 _movementInput;
+    private AnimationController animationController;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        animationController = GetComponent<AnimationController>();
     }
 
     private void FixedUpdate()

@@ -10,17 +10,17 @@ public class AnimationController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void CrossfadeAnimation(AnimationState animationState)
+    public void PlayAnimation(AnimationState animationState)
     {
         string animationName = animationState.ToString();
-        
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
-        {
-            animator.Play(animationName);
-        }
-        else
-        {
-            animator.CrossFade(animationName, crossfadeDuration);
-        }
+
+        animator.SetBool(animationName, true);
+    }
+
+    public void StopAnimation(AnimationState animationState)
+    {
+        string animationName = animationState.ToString();
+
+        animator.SetBool(animationName, false);
     }
 }
