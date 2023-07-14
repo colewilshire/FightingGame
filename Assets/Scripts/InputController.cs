@@ -5,9 +5,12 @@ public class InputController : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     private InputAction moveAction;
+    private AnimationController animationController;
 
     private void Start()
     {
+        animationController = GetComponent<AnimationController>();
+
         EnableInputs();
     }
 
@@ -36,6 +39,6 @@ public class InputController : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        AnimationController.Instance.CrossfadeAnimation(AnimationState.Walk);
+        animationController.CrossfadeAnimation(AnimationState.AxeKick);
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AnimationController : Singleton<AnimationController>
+public class AnimationController : MonoBehaviour
 {
     private float crossfadeDuration = 0.1f;
     private Animator animator;
@@ -12,6 +12,15 @@ public class AnimationController : Singleton<AnimationController>
 
     public void CrossfadeAnimation(AnimationState animationState)
     {
-        animator.CrossFade(animationState.ToString(), crossfadeDuration);
+        string animationName = animationState.ToString();
+        
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+        {
+            animator.Play(animationName);
+        }
+        else
+        {
+            animator.CrossFade(animationName, crossfadeDuration);
+        }
     }
 }
